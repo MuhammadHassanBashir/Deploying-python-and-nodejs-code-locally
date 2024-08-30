@@ -41,31 +41,38 @@ python
 requirements.txt:
 ----------------
   
-  Flask==2.0.3
+      Flask==2.0.3
 
 Dockerfile
 ----------
   
   # Use an official Python runtime as a parent image
-  FROM python:3.9-slim
+      
+      FROM python:3.9-slim
   
   # Set the working directory in the container
-  WORKDIR /app
+      
+      WORKDIR /app
   
   # Copy the current directory contents into the container at /app
-  COPY . /app
+      
+      COPY . /app
   
   # Install any needed packages specified in requirements.txt
-  RUN pip install --no-cache-dir -r requirements.txt
+      
+      RUN pip install --no-cache-dir -r requirements.txt
   
   # Make port 5000 available to the world outside this container
-  EXPOSE 5000
+      
+      EXPOSE 5000
   
   # Define environment variable
-  ENV NAME World
+      
+      ENV NAME World
   
   # Run app.py when the container launches
-  CMD ["python", "app.py"]
+      
+      CMD ["python", "app.py"]
 
 Step 3: Create a Node.js Dockerfile
 -----------------------------------  
@@ -75,10 +82,10 @@ Step 3: Create a Node.js Dockerfile
 Directory Structure:
 --------------------
   
-  my-nodejs-app/
-  ├── app.js
-  ├── package.json
-  └── Dockerfile
+      my-nodejs-app/
+      ├── app.js
+      ├── package.json
+      └── Dockerfile
 
 Sample Node.js Application (app.js):
 -----------------------------------
@@ -86,60 +93,66 @@ Sample Node.js Application (app.js):
 javascript
 ----------
   
-  const express = require('express');
-  const app = express();
-  
-  app.get('/', (req, res) => {
-      res.send('Hello from Node.js!');
-  });
-  
-  app.listen(3000, () => {
-      console.log('Server is running on port 3000');
-  });
+      const express = require('express');
+      const app = express();
+      
+      app.get('/', (req, res) => {
+          res.send('Hello from Node.js!');
+      });
+      
+      app.listen(3000, () => {
+          console.log('Server is running on port 3000');
+      });
 
 package.json:
 -------------
   
-  json
-  {
-    "name": "my-nodejs-app",
-    "version": "1.0.0",
-    "description": "Node.js on Docker",
-    "author": "Your Name",
-    "main": "app.js",
-    "scripts": {
-      "start": "node app.js"
-    },
-    "dependencies": {
-      "express": "^4.17.1"
-    }
-  }
+      json
+      {
+        "name": "my-nodejs-app",
+        "version": "1.0.0",
+        "description": "Node.js on Docker",
+        "author": "Your Name",
+        "main": "app.js",
+        "scripts": {
+          "start": "node app.js"
+        },
+        "dependencies": {
+          "express": "^4.17.1"
+        }
+      }
 
 Dockerfile:
 ----------
   
   Dockerfile
   # Use an official Node.js runtime as a parent image
-    FROM node:14
+    
+        FROM node:14
   
   # Set the working directory in the container
-    WORKDIR /app
+    
+        WORKDIR /app
   
   # Copy the package.json and package-lock.json
-    COPY package*.json ./
+    
+        COPY package*.json ./
   
   # Install dependencies
-    RUN npm install
+    
+        RUN npm install
   
   # Copy the rest of the application code
-    COPY . .
+        
+        COPY . .
   
   # Make port 3000 available to the world outside this container
-    EXPOSE 3000
+        
+        EXPOSE 3000
   
   # Run app.js using node when the container launches
     
-    CMD ["npm", "start"]
+        CMD ["npm", "start"]
 
 Step 4: Build Docker Images
 ---------------------------
@@ -149,14 +162,14 @@ Step 4: Build Docker Images
 For Python:
 -----------
   
-  cd ~/my-python-app
-  docker build -t my-python-app .
+      cd ~/my-python-app
+      docker build -t my-python-app .
 
 For Node.js:
 -----------
  
-  cd ~/my-nodejs-app
-  docker build -t my-nodejs-app .
+      cd ~/my-nodejs-app
+      docker build -t my-nodejs-app .
 
 Step 5: Run Docker Containers Locally
 --------------------------------------
@@ -164,20 +177,22 @@ Step 5: Run Docker Containers Locally
 Run the Docker containers to test the applications locally.
 
 For Python:
-
-  docker run -d -p 5000:5000 my-python-app
+----------
+  
+      docker run -d -p 5000:5000 my-python-app
 
 For Node.js:
-
-  docker run -d -p 3000:3000 my-nodejs-app
+-----------
+  
+      docker run -d -p 3000:3000 my-nodejs-app
 
 Step 6: Verify the Applications
 --------------------------------
 
   Check if the applications are running successfully by accessing them in your browser.
 
-  Python Application: Open http://localhost:5000
-  Node.js Application: Open http://localhost:3000
+      Python Application: Open http://localhost:5000
+      Node.js Application: Open http://localhost:3000
 
 You should see the messages "Hello from Python!" and "Hello from Node.js!" respectively.
 
@@ -191,14 +206,14 @@ For example, to push to Docker Hub:
 Tag your Docker images:
 ----------------------
   
-  docker tag my-python-app your-dockerhub-username/my-python-app:latest
-  docker tag my-nodejs-app your-dockerhub-username/my-nodejs-app:latest
+      docker tag my-python-app your-dockerhub-username/my-python-app:latest
+      docker tag my-nodejs-app your-dockerhub-username/my-nodejs-app:latest
   
 Push the images to Docker Hub:
 -----------------------------
 
-  docker push your-dockerhub-username/my-python-app:latest
-  docker push your-dockerhub-username/my-nodejs-app:latest
+      docker push your-dockerhub-username/my-python-app:latest
+      docker push your-dockerhub-username/my-nodejs-app:latest
 
 Step 8: Deploy on Public Cloud (Optional)
 -----------------------------------------
